@@ -6,7 +6,7 @@
 	; Manifest
 		port="8449"	(PORT)
 		synapsenumber="1"
-		botname="signalbot"
+		botname="googlechatbot"
 		encryption=0
 		botadmin="@johndoe:synapsedomain.tld"	(USER)
 		botusers="@johndoe:synapsedomain.tld"

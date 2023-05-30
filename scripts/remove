@@ -24,9 +24,9 @@ db_user=$db_name
 final_path=$(ynh_app_setting_get --app=$app --key=final_path)
 synapse_db_name="matrix_$synapse_instance"
 bot_synapse_db_user="@$botname:$server_name"
-signald_data="/var/lib/signald"
-signald_exe="/usr/bin/signald"
-signald_user="signald"
+#signald_data="/var/lib/signald"
+#signald_exe="/usr/bin/signald"
+#signald_user="signald"
 
 #=================================================
 # STANDARD REMOVE
@@ -70,8 +70,8 @@ ynh_psql_execute_as_root --database=$synapse_db_name --sql="DROP OWNED BY ""$bot
 ynh_psql_execute_as_root --database=$synapse_db_name --sql="DROP USER ""$bot_synapse_db_user"";"
 ynh_psql_execute_as_root --database=$synapse_db_name --sql="DROP OWNED BY ""$botname"";"
 ynh_psql_execute_as_root --database=$synapse_db_name --sql="DROP USER ""$botname"";"
-ynh_psql_execute_as_root --database=$synapse_db_name --sql="DROP OWNED BY ""$signald_user"";"
-ynh_psql_execute_as_root --database=$synapse_db_name --sql="DROP USER ""$signald_user"";"
+#ynh_psql_execute_as_root --database=$synapse_db_name --sql="DROP OWNED BY ""$signald_user"";"
+#ynh_psql_execute_as_root --database=$synapse_db_name --sql="DROP USER ""$signald_user"";"
 
 #=================================================
 # REMOVE APP MAIN DIR
@@ -96,8 +96,8 @@ ynh_remove_app_dependencies
 #=================================================
 ynh_script_progression --message="Removing various files..." --weight=6
 
-ynh_secure_remove --file="$signald_data"
-ynh_secure_remove --file="$signald_exe"
+#ynh_secure_remove --file="$signald_data"
+#ynh_secure_remove --file="$signald_exe"
 
 # Remove a directory securely
 ynh_secure_remove --file="/etc/matrix-$synapse_instance/app-service/$app.yaml"
@@ -115,7 +115,7 @@ ynh_script_progression --message="Removing the dedicated system user..." --weigh
 
 # Delete a system user
 ynh_system_user_delete --username=$app
-ynh_system_user_delete --username=$signald_user
+#ynh_system_user_delete --username=$signald_user
 
 #=================================================
 # END OF SCRIPT

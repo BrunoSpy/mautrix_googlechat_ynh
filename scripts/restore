@@ -42,9 +42,9 @@ port=$(ynh_app_setting_get --app=$app --key=port)
 mautrix_version=$(ynh_app_upstream_version)
 synapse_db_name="matrix_$synapse_instance"
 bot_synapse_db_user="@$botname:$server_name"
-signald_data="/var/lib/signald"
+#signald_data="/var/lib/signald"
 #signald_exe="/usr/bin/signald"
-signald_user="signald" # This is actually chosen by the signald dependency
+#signald_user="signald" # This is actually chosen by the signald dependency
 
 #=================================================
 # CHECK IF THE APP CAN BE RESTORED
@@ -84,7 +84,7 @@ ynh_script_progression --message="Reinstalling dependencies..." --weight=1
 
 # Define and install dependencies
 ynh_exec_warn_less ynh_install_app_dependencies $pkg_dependencies
-ynh_exec_warn_less ynh_install_extra_app_dependencies --repo="https://updates.signald.org unstable main" --package="$extra_dependencies" --key="https://updates.signald.org/apt-signing-key.asc"
+#ynh_exec_warn_less ynh_install_extra_app_dependencies --repo="https://updates.signald.org unstable main" --package="$extra_dependencies" --key="https://updates.signald.org/apt-signing-key.asc"
 
 #=================================================
 # RECREATE THE DEDICATED USER
@@ -92,7 +92,7 @@ ynh_exec_warn_less ynh_install_extra_app_dependencies --repo="https://updates.si
 ynh_script_progression --message="Recreating the dedicated system user..." --weight=1
 
 # Create the dedicated user (if not existing)
-ynh_system_user_create --username=$app --home_dir="$final_path" --groups="$signald_user"
+ynh_system_user_create --username=$app --home_dir="$final_path" #--groups="$signald_user"
 
 #=================================================
 # RESTORE THE POSTGRESQL DATABASE
@@ -120,16 +120,16 @@ $final_path/bin/pip3 install --upgrade pip setuptools wheel
 #=================================================
 ynh_script_progression --message="Registering Synapse app-service" --weight=1
 
-$final_path/bin/python3 -m mautrix_signal -g -c $final_path/config.yaml -r /etc/matrix-$synapse_instance/app-service/$app.yaml
+$final_path/bin/python3 -m mautrix_googlechat -g -c $final_path/config.yaml -r /etc/matrix-$synapse_instance/app-service/$app.yaml
 /opt/yunohost/matrix-$synapse_instance/update_synapse_for_appservice.sh || ynh_die "Synapse can't restart with the appservice configuration"
 
 #=================================================
 # RESTORE VARIOUS FILES
 #=================================================
 
-ynh_systemd_action --service_name=signald --action="stop"
-ynh_restore_file --origin_path="$signald_data"
-ynh_systemd_action --service_name=signald --action="start"
+#ynh_systemd_action --service_name=signald --action="stop"
+#ynh_restore_file --origin_path="$signald_data"
+#ynh_systemd_action --service_name=signald --action="start"
 
 #=================================================
 # RESTORE SYSTEMD
@@ -151,7 +151,7 @@ ynh_restore_file --origin_path="/etc/logrotate.d/$app"
 #=================================================
 ynh_script_progression --message="Integrating service in YunoHost..." --weight=1
 
-yunohost service add $app --description="$app daemon for bridging Signal and Matrix messages" --log="/var/log/$app/$app.log"
+yunohost service add $app --description="$app daemon for bridging Googlechat and Matrix messages" --log="/var/log/$app/$app.log"
 
 #=================================================
 # START SYSTEMD SERVICE

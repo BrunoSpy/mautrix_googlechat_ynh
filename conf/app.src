@@ -1,7 +1,7 @@
-SOURCE_URL=https://github.com/mautrix/signal/archive/refs/tags/v0.4.2.tar.gz
-SOURCE_SUM=bd6c537b2dae759b13ad2acdc49e76f6b9b14ce6c7f234aa6f8f7966293a1a87
+SOURCE_URL=https://github.com/mautrix/googlechat/archive/refs/tags/v0.4.0.tar.gz
+SOURCE_SUM=62b4e4c910fac34db95dbae522d5c95eb5e6122fbc9b27a0593d326f9b4dc24c
 SOURCE_SUM_PRG=sha256sum
 SOURCE_FORMAT=tar.gz
 SOURCE_IN_SUBDIR=true
-SOURCE_FILENAME=mautrix-signal.tar.gz
+SOURCE_FILENAME=mautrix-googlechat.tar.gz
 SOURCE_EXTRACT=false

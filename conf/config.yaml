@@ -14,7 +14,7 @@ homeserver:
     # Number of retries for all HTTP requests if the homeserver isn't reachable.
     http_retry_count: 4
     # The URL to push real-time bridge status to.
-    # If set, the bridge will make POST requests to this URL whenever a user's Signal connection state changes.
+    # If set, the bridge will make POST requests to this URL whenever a user's Googlechat connection state changes.
     # The bridge will use the appservice as_token to authorize requests.
     status_endpoint: null
     # Endpoint for reporting per-message status.
@@ -58,7 +58,7 @@ appservice:
     bot_username: __BOTNAME__
     # Display name and avatar for bot. Set to "remove" to remove display name/avatar, leave empty
     # to leave display name/avatar as-is.
-    bot_displayname: Signal bridge bot
+    bot_displayname: Googlechat bridge bot
     bot_avatar: mxc://maunium.net/wPJgTQbZOtpBFmDNkiNEMDUp
 
     # Whether or not to receive ephemeral events via appservice transactions.
@@ -80,45 +80,22 @@ manhole:
     # Whether or not opening the manhole is allowed.
     enabled: false
     # The path for the unix socket.
-    path: /var/tmp/mautrix-signal.manhole
+    path: /var/tmp/mautrix-googlechat.manhole
     # The list of UIDs who can be added to the whitelist.
     # If empty, any UIDs can be specified in the open-manhole command.
     whitelist:
     - 0
-
-signal:
-    # Path to signald unix socket
-    socket_path: /var/run/signald/signald.sock
-    # Directory for temp files when sending files to Signal. This should be an
-    # absolute path that signald can read. For attachments in the other direction,
-    # make sure signald is configured to use an absolute path as the data directory.
-    outgoing_attachment_dir: /tmp
-    # Directory where signald stores avatars for groups.
-    avatar_dir: ~/.config/signald/avatars
-    # Directory where signald stores auth data. Used to delete data when logging out.
-    data_dir: ~/.config/signald/data
-    # Whether or not unknown signald accounts should be deleted when the bridge is started.
-    # When this is enabled, any UserInUse errors should be resolved by restarting the bridge.
-    delete_unknown_accounts_on_start: false
-    # Whether or not message attachments should be removed from disk after they're bridged.
-    remove_file_after_handling: true
-    # Whether or not users can register a primary device
-    registration_enabled: true
-    # Whether or not to enable disappearing messages in groups. If enabled, then the expiration
-    # time of the messages will be determined by the first users to read the message, rather
-    # than individually. If the bridge has a single user, this can be turned on safely.
-    enable_disappearing_messages_in_groups: false
     
 # Bridge config
 bridge:
-    # Localpart template of MXIDs for Signal users.
-    # {userid} is replaced with an identifier for the Signal user.
+    # Localpart template of MXIDs for Googlechat users.
+    # {userid} is replaced with an identifier for the Googlechat user.
     username_template: "sg_{userid}"
-    # Displayname template for Signal users.
-    # {displayname} is replaced with the displayname of the Signal user, which is the first
+    # Displayname template for Googlechat users.
+    # {displayname} is replaced with the displayname of the Googlechat user, which is the first
     # available variable in displayname_preference. The variables in displayname_preference
     # can also be used here directly.
-    displayname_template: "{displayname} (SG)"
+    displayname_template: "{displayname} (Gg)"
     # Whether or not contact list displaynames should be used.
     # Possible values: disallow, allow, prefer
     #
@@ -182,9 +159,9 @@ bridge:
     # chat portal rooms. This will be implicitly enabled if encryption.default is true.
     private_chat_portal_meta: false
     # Whether or not the bridge should send a read receipt from the bridge bot when a message has
-    # been sent to Signal. This let's you check manually whether the bridge is receiving your
+    # been sent to Googlechat. This let's you check manually whether the bridge is receiving your
     # messages.
-    # Note that this is not related to Signal delivery receipts.
+    # Note that this is not related to Googlechat delivery receipts.
     delivery_receipts: false
     # Whether or not delivery errors should be reported as messages in the Matrix room. (not yet implemented)
     delivery_error_reports: false
@@ -213,7 +190,7 @@ bridge:
     # Markdown is supported. The defaults are listed below.
     management_room_text:
         # Sent when joining a room.
-        welcome: "Hello, I'm a Signal bridge bot."
+        welcome: "Hello, I'm a Googlechat bridge bot."
         # Sent when joining a management room and the user is already logged in.
         welcome_connected: "Use `help` for help."
         # Sent when joining a management room and the user is not logged in.
@@ -239,10 +216,10 @@ bridge:
         "__BOTADMIN__": "admin"
 
     relay:
-        # Whether relay mode should be allowed. If allowed, `!signal set-relay` can be used to turn any
+        # Whether relay mode should be allowed. If allowed, `!Googlechat set-relay` can be used to turn any
         # authenticated user into a relaybot for that chat.
         enabled: __ENABLE_RELAYBOT__
-        # The formats to use when sending messages to Signal via a relay user.
+        # The formats to use when sending messages to Googlechat via a relay user.
         #
         # Available variables:
         #   $sender_displayname - The display name of the sender (e.g. Example User)
@@ -267,7 +244,7 @@ logging:
     version: 1
     formatters:
         colored:
-            (): mautrix_signal.util.ColorFormatter
+            (): mautrix_Googlechat.util.ColorFormatter
             format: "[%(asctime)s] [%(levelname)s@%(name)s] %(message)s"
         normal:
             format: "[%(asctime)s] [%(levelname)s@%(name)s] %(message)s"

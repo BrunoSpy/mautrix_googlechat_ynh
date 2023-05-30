@@ -50,7 +50,7 @@ mautrix_version=$(ynh_app_upstream_version)
 enable_relaybot=true
 bot_synapse_db_user="@$botname:$server_name"
 synapse_db_name="matrix_$synapse_instance"
-signald_user="signald" # This is actually chosen by the signald dependency
+#signald_user="signald" # This is actually chosen by the signald dependency
 
 #=================================================
 # CHECK IF THE APP CAN BE INSTALLED WITH THESE ARGS
@@ -92,7 +92,7 @@ ynh_app_setting_set --app=$app --key=port --value=$port
 ynh_script_progression --message="Installing dependencies..." --weight=10
 
 ynh_exec_warn_less ynh_install_app_dependencies $pkg_dependencies
-ynh_install_extra_app_dependencies --repo="https://updates.signald.org unstable main" --package="$extra_dependencies" --key="https://updates.signald.org/apt-signing-key.asc"
+#ynh_install_extra_app_dependencies --repo="https://updates.signald.org unstable main" --package="$extra_dependencies" --key="https://updates.signald.org/apt-signing-key.asc"
 sleep 3
 
 #=================================================
@@ -104,7 +104,7 @@ ynh_script_progression --message="Configuring system user..." --weight=1
 # Add the user to the signald group. The signald group was created when the signald
 # package was installed from the extra repository
 # resolved by https://gitlab.com/signald/signald/-/commit/278240f3f1cc40a3b444c958b68ca3d6908e98a8
-ynh_system_user_create --username=$app --home_dir="$final_path" --groups="$signald_user"
+ynh_system_user_create --username=$app --home_dir="$final_path" #--groups="$signald_user"
 
 #=================================================
 # CREATE A POSTGRESQL DATABASE
@@ -153,14 +153,14 @@ mkdir -p /var/log/$app
 python3 -m venv $final_path
 export HOME=$final_path
 $final_path/bin/pip3 install --upgrade pip setuptools wheel
-$final_path/bin/pip3 install --upgrade $final_path/src/mautrix-signal.tar.gz[metrics,e2be,formattednumbers,qrlink,stickers]
+$final_path/bin/pip3 install --upgrade $final_path/src/mautrix-googlechat.tar.gz[metrics,e2be,formattednumbers,qrlink,stickers]
 
 #=================================================
 # REGISTER SYNAPSE APP-SERVICE
 #=================================================
 ynh_script_progression --message="Registering Synapse app-service" --weight=1
 
-$final_path/bin/python3 -m mautrix_signal -g -c $final_path/config.yaml -r /etc/matrix-$synapse_instance/app-service/$app.yaml
+$final_path/bin/python3 -m mautrix_googlechat -g -c $final_path/config.yaml -r /etc/matrix-$synapse_instance/app-service/$app.yaml
 /opt/yunohost/matrix-$synapse_instance/update_synapse_for_appservice.sh || ynh_die --message="Synapse can't restart with the appservice configuration"
 
 chown -R $app:$app "$final_path"
@@ -193,7 +193,7 @@ chown -R $app:$app /var/log/$app
 #=================================================
 ynh_script_progression --message="Integrating service in YunoHost..." --weight=1
 
-yunohost service add $app --description="$app daemon for bridging Signal and Matrix messages" --log=/var/log/$app/$app.log
+yunohost service add $app --description="$app daemon for bridging Googlechat and Matrix messages" --log=/var/log/$app/$app.log
 
 #=================================================
 # START SYSTEMD SERVICE
