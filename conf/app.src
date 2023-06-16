@@ -1,5 +1,5 @@
 SOURCE_URL=https://github.com/BrunoSpy/googlechat/archive/refs/tags/0.4.1.tar.gz
-SOURCE_SUM=62b4e4c910fac34db95dbae522d5c95eb5e6122fbc9b27a0593d326f9b4dc24c
+SOURCE_SUM=e50f768bb5c04baac4428ccb4a5805fc784e517a291272ab1981ac17f1d68231
 SOURCE_SUM_PRG=sha256sum
 SOURCE_FORMAT=tar.gz
 SOURCE_IN_SUBDIR=true
