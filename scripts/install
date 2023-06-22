@@ -152,8 +152,8 @@ mkdir -p /var/log/$app
 # Configure Mautrix-Bridge
 ynh_exec_as $app python3 -m venv $final_path
 export HOME=$final_path
-ynh_exec_as $app$final_path/bin/pip3 install --upgrade pip setuptools wheel
-ynh_exec_as $app$final_path/bin/pip3 install --upgrade $final_path/src/mautrix-googlechat.tar.gz[all]
+ynh_exec_as $app $final_path/bin/pip3 install --upgrade pip setuptools wheel
+ynh_exec_as $app $final_path/bin/pip3 install --upgrade $final_path/src/mautrix-googlechat.tar.gz[all]
 
 #=================================================
 # REGISTER SYNAPSE APP-SERVICE
