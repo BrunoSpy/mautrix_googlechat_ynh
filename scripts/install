@@ -153,7 +153,7 @@ mkdir -p /var/log/$app
 python3 -m venv $final_path
 export HOME=$final_path
 $final_path/bin/pip3 install --upgrade pip setuptools wheel
-$final_path/bin/pip3 install --upgrade $final_path/src/mautrix-googlechat.tar.gz[metrics,e2be,formattednumbers,qrlink,stickers]
+$final_path/bin/pip3 install --upgrade $final_path/src/mautrix-googlechat.tar.gz[all]
 
 #=================================================
 # REGISTER SYNAPSE APP-SERVICE
