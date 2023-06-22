@@ -6,7 +6,7 @@
         "en": "Matrix / Synapse puppeting bridge for Googlechat",
         "fr": "Passerelle Matrix / Synapse pour Googlechat"
     },
-    "version": "0.5.0~ynh4",
+    "version": "0.5.0~ynh5",
     "url": "https://github.com/mautrix/googlechat",
     "upstream": {
         "license": "AGPL-3.0-or-later",
